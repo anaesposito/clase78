@@ -187,10 +187,10 @@ const modificarUsuario = () => {
       fetch(`https://601da02bbe5f340017a19d60.mockapi.io/users/${idUsuario}`)
         .then((res) => res.json())
         .then((info) => {
-          fullnameForm.value = `${info.fullname}`;
-          addressForm.value = `${info.address}`;
-          phoneForm.value = `${info.phone}`;
-          emailForm.value = `${info.email}`;
+          fullnameForm.placeholder = `${info.fullname}`;
+          addressForm.placeholder = `${info.address}`;
+          phoneForm.placeholder = `${info.phone}`;
+          emailForm.placeholder = `${info.email}`;
         });
 
       fetch(`https://601da02bbe5f340017a19d60.mockapi.io/users/${idUsuario}`, {
