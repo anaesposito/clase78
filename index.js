@@ -206,7 +206,9 @@ const modificarUsuario = () => {
         }),
       })
         .then((res) => res.json())
-        .then((data) => formDos.classList.add("hidden"), generarHtml());
+        .then((infoDos) => {
+          formDos.classList.add("hidden"), generarHtml();
+        });
     };
   });
 };
