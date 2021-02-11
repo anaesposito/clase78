@@ -107,10 +107,10 @@
 // .then(data => console.log(data))
 
 const formDos = document.querySelector(".formDos");
-const fullnameForm = document.querySelector("#fullname").value;
-const addressForm = document.querySelector("#address").value;
-const phoneForm = document.querySelector("#phone").value;
-const emailForm = document.querySelector("#email").value;
+const fullnameForm = document.querySelector("#fullnameForm");
+const addressForm = document.querySelector("#addressForm");
+const phoneForm = document.querySelector("#phoneForm");
+const emailForm = document.querySelector("#emailForm");
 
 // // GET
 const generarHtml = () => {
@@ -122,7 +122,7 @@ const generarHtml = () => {
       lista.innerHTML = "";
       data.map((nombre) => {
         lista.innerHTML += `<li>${nombre.fullname}<button class="botonesBorrar" id="${nombre.id}">Borrame</button>
-        <button class="botonModificar" data="${nombre.id}">Modificame</button></li> `;
+        <button class="botonModificar" data-id="${nombre.id}">Modificame</button></li> `;
       });
       borrarUsuario();
       modificarUsuario();
@@ -182,34 +182,50 @@ const modificarUsuario = () => {
     // console.log(botonesModificar);
     boton.onclick = () => {
       formDos.classList.remove("hidden");
-      let idUsuario = boton.dataset;
+      let idUsuario = boton.dataset.id;
 
       fetch(`https://601da02bbe5f340017a19d60.mockapi.io/users/${idUsuario}`)
         .then((res) => res.json())
         .then((info) => {
+          console.log(fullnameForm);
           fullnameForm.placeholder = `${info.fullname}`;
           addressForm.placeholder = `${info.address}`;
           phoneForm.placeholder = `${info.phone}`;
           emailForm.placeholder = `${info.email}`;
-        });
-
-      fetch(`https://601da02bbe5f340017a19d60.mockapi.io/users/${idUsuario}`, {
-        method: "patch",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fullname: fullname,
-          addres: address,
-          phone: phone,
-          email: email,
-        }),
-      })
-        .then((res) => res.json())
-        .then((infoDos) => {
-          formDos.classList.add("hidden"), generarHtml();
+          fullnameForm.value = `${info.fullname}`;
+          addressForm.value = `${info.address}`;
+          phoneForm.value = `${info.phone}`;
+          emailForm.value = `${info.email}`;
+          formDos.onsubmit = (e) => {
+            e.preventDefault();
+            const fullnameFormListo = document.querySelector("#fullname").value;
+            const addressFormListo = document.querySelector("#address").value;
+            const phoneFormListo = document.querySelector("#phone").value;
+            const emailFormListo = document.querySelector("#email").value;
+            console.log(fullnameFormListo);
+            fetch(
+              `https://601da02bbe5f340017a19d60.mockapi.io/users/${idUsuario}`,
+              {
+                method: "put",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  fullname: fullnameFormListo,
+                  addres: addressFormListo,
+                  phone: phoneFormListo,
+                  email: emailFormListo,
+                }),
+              }
+            )
+              .then((res) => res.json())
+              .then((infoDos) => {
+                formDos.classList.add("hidden"), generarHtml();
+              });
+          };
         });
     };
   });
 };
+
 generarHtml();
