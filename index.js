@@ -187,7 +187,7 @@ const modificarUsuario = () => {
       fetch(`https://601da02bbe5f340017a19d60.mockapi.io/users/${idUsuario}`)
         .then((res) => res.json())
         .then((info) => {
-          console.log(fullnameForm);
+          // console.log(fullnameForm);
           fullnameForm.placeholder = `${info.fullname}`;
           addressForm.placeholder = `${info.address}`;
           phoneForm.placeholder = `${info.phone}`;
@@ -196,6 +196,7 @@ const modificarUsuario = () => {
           addressForm.value = `${info.address}`;
           phoneForm.value = `${info.phone}`;
           emailForm.value = `${info.email}`;
+
           formDos.onsubmit = (e) => {
             e.preventDefault();
             const fullnameFormListo = document.querySelector("#fullname").value;
@@ -203,10 +204,11 @@ const modificarUsuario = () => {
             const phoneFormListo = document.querySelector("#phone").value;
             const emailFormListo = document.querySelector("#email").value;
             console.log(fullnameFormListo);
+            let idUsuario = boton.dataset.id;
             fetch(
               `https://601da02bbe5f340017a19d60.mockapi.io/users/${idUsuario}`,
               {
-                method: "put",
+                method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
                 },
@@ -220,7 +222,7 @@ const modificarUsuario = () => {
             )
               .then((res) => res.json())
               .then((infoDos) => {
-                formDos.classList.add("hidden"), generarHtml();
+                formDos.classList.add("hidden");
               });
           };
         });
