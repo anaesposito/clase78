@@ -187,7 +187,6 @@ const modificarUsuario = () => {
       fetch(`https://601da02bbe5f340017a19d60.mockapi.io/users/${idUsuario}`)
         .then((res) => res.json())
         .then((info) => {
-          // console.log(fullnameForm);
           fullnameForm.placeholder = `${info.fullname}`;
           addressForm.placeholder = `${info.address}`;
           phoneForm.placeholder = `${info.phone}`;
@@ -199,10 +198,12 @@ const modificarUsuario = () => {
 
           formDos.onsubmit = (e) => {
             e.preventDefault();
-            const fullnameFormListo = document.querySelector("#fullname").value;
-            const addressFormListo = document.querySelector("#address").value;
-            const phoneFormListo = document.querySelector("#phone").value;
-            const emailFormListo = document.querySelector("#email").value;
+            const fullnameFormListo = document.querySelector("#fullnameForm")
+              .value;
+            const addressFormListo = document.querySelector("#addressForm")
+              .value;
+            const phoneFormListo = document.querySelector("#phoneForm").value;
+            const emailFormListo = document.querySelector("#emailForm").value;
             console.log(fullnameFormListo);
             let idUsuario = boton.dataset.id;
             fetch(
@@ -223,6 +224,7 @@ const modificarUsuario = () => {
               .then((res) => res.json())
               .then((infoDos) => {
                 formDos.classList.add("hidden");
+                generarHtml();
               });
           };
         });
